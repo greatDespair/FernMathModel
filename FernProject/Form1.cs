@@ -12,7 +12,7 @@ namespace FernProject
 {
     public partial class MainForm : Form
     {
-        
+        private int levelVar_;
         public MainForm()
         {
             InitializeComponent();
@@ -26,12 +26,14 @@ namespace FernProject
         private void DrawLine(int x, int y, double a, double b)
         {
             g.DrawLine(p, x, y, (int)Math.Round(x + 0.2*a * Math.Cos(b)), (int)Math.Round(y - 0.2*a * Math.Sin(b)));
+
         }
 
         private void Draw(int x, int y, double a, double b)
         {
-            if (a > 5)
+            if (a > levelVar_)
             {
+
                 DrawLine(x, y, a, b);
                 x = (int)Math.Round(x + 0.2 * a * Math.Cos(b));
                 y = (int)Math.Round(y - 0.2 * a * Math.Sin(b));
@@ -43,10 +45,20 @@ namespace FernProject
 
         private void CheckFern_Click(object sender, EventArgs e)
         {
+
             g = ModelView.CreateGraphics();
             p = new Pen(Color.Green);
             g.FillRectangle(Brushes.White, 0, 0, ModelView.Width, ModelView.Height);
-            Draw(0, 500, 400, Math.PI /4);
+            for (levelVar_ = 100; levelVar_ > 2; levelVar_--)
+            {
+                ViewDays();
+                Draw(70, 500, 300, Math.PI / 4);
+            }
+        }
+        private void ViewDays()
+        {
+            DaysView.Text = Convert.ToString(100 - levelVar_);
+
         }
     }
 }
